@@ -1,0 +1,11 @@
+psql -h localhost -Uokapi -dokapi
+okapi25
+psql -h localhost -Ufolio_admin -dokapi_modules
+folio_admin
+
+vagrant scp \dev\work\mod-audit\target\mod-audit-fat.jar /tmp/audit.jar
+vagrant scp \dev\work\mod-audit-filter\target\mod-audit-filter-fat.jar /tmp/filter.jar
+
+cd /tmp
+java -jar /tmp/audit.jar -Dhttp.port=9082 db_connection=/tmp/pg.json
+java -jar /tmp/filter.jar -Dhttp.port=9083
